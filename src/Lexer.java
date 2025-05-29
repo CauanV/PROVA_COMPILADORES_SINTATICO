@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class Lexer {
     public TabelaDeSimbolos objTabelaDeSimbolos = new TabelaDeSimbolos();
-    public ArrayList<ClassificacaoLexica> ArrayListAnaliseLexica = new ArrayList<>();
+    public static ArrayList<ClassificacaoLexica> ArrayListAnaliseLexica = new ArrayList<>();
 
     boolean TokenVOID(String Lexema) {
         if (Lexema.equals("void"))
@@ -28,6 +28,21 @@ public class Lexer {
             return true;
         else
             return false;
+    }
+
+    boolean TokenComandoWhile(String Lexema) {
+        if (Lexema.equals("while"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenComandoReturn(String Lexema) {
+        if (Lexema.equals("return")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     boolean TokenNumeroDecimal(String Lexema) {
@@ -51,11 +66,34 @@ public class Lexer {
             return false;
     }
 
+    boolean TokenTipoComandoSCANF(String Lexema) {
+        if (Lexema.equals("scanf"))
+            return true;
+        else
+            return false;
+    }
+
     boolean TokenTipoInteiro(String Lexema) {
         if (Lexema.equals("int"))
             return true;
         else
             return false;
+    }
+
+    boolean TokenIncremento(String Lexema) {
+        if (Lexema.equals("++")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean TokenDecremento(String Lexema) {
+        if (Lexema.equals("--")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     boolean TokenTipoChar(String Lexema) {
@@ -91,6 +129,13 @@ public class Lexer {
             return false;
     }
 
+    boolean TokenTipoPrintf(String Lexema) {
+        if (Lexema.equals("printf"))
+            return true;
+        else
+            return false;
+    }
+
     boolean TokenTipoScanf(String Lexema) {
         if (Lexema.equals("scanf"))
             return true;
@@ -121,6 +166,62 @@ public class Lexer {
 
     boolean TokenFechaChave(String Lexema) {
         if (Lexema.equals("}"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenAbreColchetes(String Lexema) {
+        if (Lexema.equals("["))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenFechaColchetes(String Lexema) {
+        if (Lexema.equals("]"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenComandoSwitch(String Lexema) {
+        if (Lexema.equals("switch"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenComandoCase(String Lexema) {
+        if (Lexema.equals("case"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenComandoBreak(String Lexema) {
+        if (Lexema.equals("break"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenComandoDefault(String Lexema) {
+        if (Lexema.equals("default"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenComandoDo(String Lexema) {
+        if (Lexema.equals("do"))
+            return true;
+        else
+            return false;
+    }
+
+    boolean TokenComandoSystem(String Lexema) {
+        if (Lexema.equals("System"))
             return true;
         else
             return false;
@@ -181,6 +282,22 @@ public class Lexer {
         }
     }
 
+    boolean TokenMenorIgual(String Lexema) {
+        if (Lexema.equals("<=")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean TokenMaiorIgual(String Lexema) {
+        if (Lexema.equals(">=")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     boolean TokenNumeroInteiro(String Lexema) {
         // int tamanho = Lexema.length();
         // // verifica se o lexema é um número inteiro
@@ -218,8 +335,48 @@ public class Lexer {
         }
     }
 
+    boolean TokenDivisao(String Lexema) {
+        if (Lexema.equals("/")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean TokenDiferente(String Lexema) {
+        if (Lexema.equals("!=")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     boolean TokenOperadorStream(String Lexema) {
         if (Lexema.equals("<<") || Lexema.equals(">>")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean TokenOperadorAnd(String Lexema) {
+        if (Lexema.equals("&&")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean TokenOperadorIgual(String Lexema) {
+        if (Lexema.equals("==")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean TokenOperadorOu(String Lexema) {
+        if (Lexema.equals("||")) {
             return true;
         } else {
             return false;
@@ -230,6 +387,10 @@ public class Lexer {
         // qualquer sequência (inclusive vazia) de caracteres que não sejam " entre
         // aspas duplas
         return Lexema.matches("\"[^\"]*\"");
+    }
+
+    boolean TokenComentario(String Lexema) {
+        return Lexema.matches("//.*");
     }
 
     boolean TokenDoisPontos(String Lexema) {
@@ -319,8 +480,44 @@ public class Lexer {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.CONSTANTE_CHAR, linha));
             return;
         }
+        if (TokenIncremento(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.INCREMENTO, linha));
+            return;
+        }
+        if (TokenDecremento(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.DECREMENTO, linha));
+            return;
+        }
         if (TokenTipoChar(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.CHAR, linha));
+            return;
+        }
+        if (TokenComandoReturn(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.RETURN, linha));
+            return;
+        }
+        if (TokenComandoSystem(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_SYSTEM, linha));
+            return;
+        }
+        if (TokenComandoSwitch(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_SWITCH, linha));
+            return;
+        }
+        if (TokenComandoCase(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_CASE, linha));
+            return;
+        }
+        if (TokenComandoBreak(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_BREAK, linha));
+            return;
+        }
+        if (TokenComandoDefault(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_DEFAULT, linha));
+            return;
+        }
+        if (TokenComandoDo(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_DO, linha));
             return;
         }
         if (TokenNumeroDecimal(Lexema)) {
@@ -331,6 +528,10 @@ public class Lexer {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.INT, linha));
             return;
         }
+        if (TokenDiferente(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.DIFERENTE, linha));
+            return;
+        }
         if (TokenTipoFloat(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.FLOAT, linha));
             return;
@@ -339,8 +540,16 @@ public class Lexer {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.PRINTLN, linha));
             return;
         }
-        if (TokenTipoScanf(Lexema)) {
+        if (TokenTipoPrintf(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.PRINTF, linha));
+            return;
+        }
+        if (TokenTipoComandoSCANF(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.SCANF, linha));
+            return;
+        }
+        if (TokenTipoScanf(Lexema)) {// comando scanf
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.PRINTF, linha));
             return;
         }
         if (TokenTipoAtribuicao(Lexema)) {
@@ -349,6 +558,18 @@ public class Lexer {
         }
         if (TokenPontoVirgula(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.PONTO_VIRGULA, linha));
+            return;
+        }
+        if (TokenComentario(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMENTARIO, linha));
+            return;
+        }
+        if (TokenMenorIgual(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.MENOR_IGUAL, linha));
+            return;
+        }
+        if (TokenMaiorIgual(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.MAIOR_IGUAL, linha));
             return;
         }
         if (TokenAbreChave(Lexema)) {
@@ -367,6 +588,14 @@ public class Lexer {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.FECHA_PARENTES, linha));
             return;
         }
+        if (TokenAbreColchetes(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.ABRE_COLCHETE, linha));
+            return;
+        }
+        if (TokenFechaColchetes(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.FECHA_COLCHETE, linha));
+            return;
+        }
         if (TokenAdicao(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.ADICAO, linha));
             return;
@@ -383,6 +612,10 @@ public class Lexer {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_FOR, linha));
             return;
         }
+        if (TokenComandoWhile(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_WHILE, linha));
+            return;
+        }
         if (TokenTipoComandoIf(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_IF, linha));
             return;
@@ -391,12 +624,29 @@ public class Lexer {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.COMANDO_ELSE, linha));
             return;
         }
+
         if (TokenMultiplicacao(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.MULTIPLICACAO, linha));
             return;
         }
+        if (TokenDivisao(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.DIVISAO, linha));
+            return;
+        }
         if (TokenOperadorStream(Lexema)) {
             ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.OPERADOR_STREAM, linha));
+            return;
+        }
+        if (TokenOperadorAnd(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.OPERADOR_AND, linha));
+            return;
+        }
+        if (TokenOperadorIgual(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.OPERADOR_IGUAL, linha));
+            return;
+        }
+        if (TokenOperadorOu(Lexema)) {
+            ArrayListAnaliseLexica.add(new ClassificacaoLexica(Lexema, Token.OPERADOR_OU, linha));
             return;
         }
         if (TokenDoisPontos(Lexema)) {
@@ -453,7 +703,7 @@ public class Lexer {
         objTabelaDeSimbolos.adicionarSimbolo(Token.CHAR, "COMANDO CHAR");
         objTabelaDeSimbolos.adicionarSimbolo(Token.FLOAT, "COMANDO FLOAT");
         objTabelaDeSimbolos.adicionarSimbolo(Token.PRINTLN, "COMANDO PRINTLN");
-        objTabelaDeSimbolos.adicionarSimbolo(Token.SCANF, "COMANDO SCANF");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.PRINTF, "PRINTF");
         objTabelaDeSimbolos.adicionarSimbolo(Token.ATRIBUICAO, "ATRIBUICAO");
         objTabelaDeSimbolos.adicionarSimbolo(Token.PONTO_VIRGULA, "PONTO_VIRGULA");
         objTabelaDeSimbolos.adicionarSimbolo(Token.ABRE_CHAVE, "ABRE_CHAVE");
@@ -481,26 +731,50 @@ public class Lexer {
         objTabelaDeSimbolos.adicionarSimbolo(Token.CONSTANTE_CHAR, "CONSTANTE CHAR");
         objTabelaDeSimbolos.adicionarSimbolo(Token.E_COMERCIAL, "E_COMERCIAL");
         objTabelaDeSimbolos.adicionarSimbolo(Token.DECIMAL, "DECIMAL");
-
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMENTARIO, "COMENTARIO");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.OPERADOR_AND, "OPERADOR AND");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.OPERADOR_IGUAL, "OPERADOR IGUAL");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.OPERADOR_OU, "OPERADOR OU");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.RETURN, "RETURN");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.ABRE_COLCHETE, "ABRE COLCHETE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.FECHA_COLCHETE, "FECHA COLCHETE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.SCANF, "SCANF");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMANDO_WHILE, "COMANDO WHILE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMANDO_SWITCH, "COMANDO SWITCH");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMANDO_CASE, "COMANDO CASE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMANDO_BREAK, "COMANDO BREAK");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMANDO_DEFAULT, "COMANDO DEFAULT");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMANDO_DO, "COMANDO DO");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.COMANDO_SYSTEM, "COMANDO SYSTEM");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.MENOR_IGUAL, "MENOR IGUAL");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.MAIOR_IGUAL, "MAIOR IGUAL");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.DIVISAO, "DIVISAO");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.DIFERENTE, "DIFERENTE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.INCREMENTO, "INCREMENTO");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.DECREMENTO, "DECREMENTO");
     }
 
-    void GerarAnaliseLexica() {
-        // varrer todo o arraylist ArrayListAnaliseLexica
-        // classificar os lexemas da linha lida do arquivo
+    boolean GerarAnaliseLexica() {
+        boolean ResultadoAnaliseLexica = true;
+        // varrer todo o ArrayListAnaliseLexica
+        // Classificar os lexemas da linha lida do arquivo
         for (ClassificacaoLexica obj : ArrayListAnaliseLexica) {
             String Lexema = obj.Lexema;
             int linha = obj.Linha;
             int codigoToken = obj.Token;
-            // String simbolo = objTabelaDeSimbolos.buscarValor(codigoToken);
+            if (obj.Token == Token.ERRO_DESCONHECIDO) {
+
+                ResultadoAnaliseLexica = false;
+            }
 
             // mostrar a classificacao lexica na tela
-            System.out.println("Linha: " + linha + " | Lexema: " + Lexema + // " | Simbolo: " + simbolo
+            System.out.println("Linha: " + linha + " | Lexema: " + Lexema +
                     " | " + objTabelaDeSimbolos.buscarValor(codigoToken) + " | Token: " + codigoToken);
         }
-
+        return ResultadoAnaliseLexica; // TODOS OS LEXEMAS FORAM RECONHECIDOS
     }
 
-    void AnalisadorLexico(File selectedFile) throws FileNotFoundException {
+    boolean AnalisadorLexico(File selectedFile) throws FileNotFoundException {
         // criar a tabela de simbolos
         GerarTabelaDeSimbolos();
 
@@ -510,49 +784,79 @@ public class Lexer {
 
         System.out.println("\n\n**********ANALISE LEXICA**********\n\n");
 
-        // comecar a leitura de cada uma das linhas
+        // Expressão regular para identificar strings, operadores, números, etc.
+        // Pattern p = Pattern.compile(
+        // "//.*" + // Comentários de linha primeiro
+        // "|" +
+        // "\"(?:\\\\.|[^\"])*\"" + // Strings
+        // "|" +
+        // "'(?:\\\\.|[^\\\\'])'" + // Char
+        // "|" +
+        // ">>|<<|==|!=|<=|>=|&&|\\|\\||" + // Operadores compostos
+        // "[\\[\\]{}(),;:+\\-*/%<>=&]" + // Símbolos
+        // "|" +
+        // "[A-Za-z_][A-Za-z0-9_]*" + // Identificadores
+        // "|" +
+        // "-?\\d+\\.\\d+|-?\\d+" // Números
+        // );
+
+        Pattern p = Pattern.compile(
+                "//.*" + // Comentários
+                        "|" + "\"(?:\\\\.|[^\"])*\"" + // Strings
+                        "|" + "'(?:\\\\.|[^\\\\'])'" + // Chars
+                        "|" + "\\+\\+|--|>>|<<|==|!=|<=|>=|&&|\\|\\|" + // <- Corrigido: inclui ++ e --
+                        "|" + "[\\[\\]{}(),;:+\\-*/%<>=&]" + // Símbolos simples
+                        "|" + "[A-Za-z_][A-Za-z0-9_]*" + // Identificadores
+                        "|" + "-?\\d+\\.\\d+|-?\\d+" // Números
+        );
+
+        // Começar a leitura das linhas
         int linha = 1;
         while (LeituraArquivo.hasNextLine()) {
             TextoArquivoAnalisado = LeituraArquivo.nextLine();
 
-            // Expressão regular para identificar strings entre aspas e palavras
-            Pattern p = Pattern.compile(
-                    // 1) Literais de string: "abc"
-                    "\"(?:\\\\.|[^\"])*\"" +
-                            "|" +
-                            // 2) Literais de char: 'c'
-                            "'(?:\\\\.|[^\\\\'])'" +
-                            "|" +
-                            // 3) Operadores compostos (>> << == != <= >= && ||) e símbolos únicos
-                            ">>|<<|==|!=|<=|>=|&&|\\|\\||" +
-                            "[\\[\\]{}(),;:+\\-*/%<>=&]" +
-                            "|" +
-                            // 4) Identificadores (letra ou _ seguido de alfanuméricos/_)
-                            "[A-Za-z_][A-Za-z0-9_]*" +
-                            "|" +
-                            // 5) Números (inteiros, decimais, negativos)
-                            "-?\\d+\\.\\d+|-?\\d+");
+            // Se a linha contém comentário
+            int posComentario = TextoArquivoAnalisado.indexOf("//"); // indexOf("//") é usado para detectar comentários
+                                                                     // de linha. Se encontrar //
+                                                                     // você sabe que o restante da linha é um
+                                                                     // comentário, e pode separá-lo do código anterior.
 
-            Matcher m = p.matcher(TextoArquivoAnalisado);
+            if (posComentario != -1) { // Se o conteúdo buscado não for encontrado, ele retorna -1.
+                String antesDoComentario = TextoArquivoAnalisado.substring(0, posComentario); // substring retorna uma
+                                                                                              // parte da string
+                String comentario = TextoArquivoAnalisado.substring(posComentario); // inclui "//"
 
-            // classificar os lexemas da linha lida do arquivo
-            while (m.find()) {
-                String Lexema = m.group();
-                if (!Lexema.trim().isEmpty()) { // Evitar lexemas vazios
-                    classificaLemexa(Lexema, linha);
+                // Analisa apenas o código antes do comentário
+                Matcher m1 = p.matcher(antesDoComentario);
+                while (m1.find()) {
+                    String Lexema = m1.group(); // group Retorna o conteúdo que corresponde ao padrão encontrado.
+                    if (!Lexema.trim().isEmpty()) { // trim remove espaços em branco do início e do fim da string.
+                        classificaLemexa(Lexema, linha);
+                    }
+                }
+
+                // Trata o comentário inteiro como um único lexema
+                classificaLemexa(comentario, linha);
+            } else {
+                // Linha sem comentário: processa normalmente
+                Matcher m1 = p.matcher(TextoArquivoAnalisado);
+                while (m1.find()) {
+                    String Lexema = m1.group();
+                    if (!Lexema.trim().isEmpty()) {
+                        classificaLemexa(Lexema, linha);
+                    }
                 }
             }
 
-            // incrementar o numero da linha
+            // Incrementa número da linha
             linha++;
         }
 
-        // fechar a leitura do arquivo
-        LeituraArquivo.close();
+        LeituraArquivo.close(); // Boas práticas: fechar scanner
 
         // mostrar a analise lexica na tela e gerar um arquivo com a classificacao dos
         // lexemas
-        GerarAnaliseLexica();
+        return GerarAnaliseLexica();
     }
 
 }

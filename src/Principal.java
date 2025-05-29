@@ -19,7 +19,6 @@ public class Principal {
         // abre a janela de dialogo para selecionar o arquivo
         int returnValue = fileChooser.showOpenDialog(null);
 
-        // se o usuario selecionou um arquivo
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             // pega o arquivo selecionado
             File selectedFile = fileChooser.getSelectedFile();
@@ -28,7 +27,17 @@ public class Principal {
             System.out.println("\n =====> Arquivo selecionado:" + selectedFile.getAbsolutePath());
 
             // chamar o Lexer para fazer a Analise lexica
-            objetoAnalisadorLexico.AnalisadorLexico(selectedFile);
+            boolean resultado = objetoAnalisadorLexico.AnalisadorLexico(selectedFile);
+
+            if (resultado == false) {
+                // mostrar o caminho do arquivo selecionado
+                System.out.println("\n #### ERRO NA ANALISE LEXICA ####");
+            } else {// iniciar a analise sintatica
+                System.out.println("\n\n************* ANALISE SINTATICA *************\n\n");
+                AnalisadorSintatico objetoAnalisadorSintatico = new AnalisadorSintatico(
+                        objetoAnalisadorLexico.ArrayListAnaliseLexica);
+                objetoAnalisadorSintatico.AnaliseSintatica();
+            }
         } else {
             System.out.println("Nenhum arquivo selecionado.");
         }

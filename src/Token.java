@@ -4,7 +4,7 @@ public class Token {
     public static final int INT = 2;
     public static final int FLOAT = 3;
     public static final int PRINTLN = 4;
-    public static final int SCANF = 5;
+    public static final int PRINTF = 5;
     public static final int ATRIBUICAO = 6;
     public static final int PONTO_VIRGULA = 7;
     public static final int ABRE_CHAVE = 8;
@@ -34,5 +34,26 @@ public class Token {
     public static final int CONSTANTE_CHAR = 32;
     public static final int E_COMERCIAL = 33;
     public static final int DECIMAL = 34;
+    public static final int COMENTARIO = 35;
+    public static final int OPERADOR_AND = 36;
+    public static final int OPERADOR_IGUAL = 37;
+    public static final int OPERADOR_OU = 38;
+    public static final int RETURN = 39;
+    public static final int SCANF = 40;
+    public static final int ABRE_COLCHETE = 41;
+    public static final int FECHA_COLCHETE = 42;
+    public static final int COMANDO_WHILE = 43;
+    public static final int COMANDO_SWITCH = 44;
+    public static final int COMANDO_CASE = 45;
+    public static final int COMANDO_BREAK = 46;
+    public static final int COMANDO_DEFAULT = 47;
+    public static final int COMANDO_DO = 48;
+    public static final int COMANDO_SYSTEM = 49;
+    public static final int MENOR_IGUAL = 50;
+    public static final int MAIOR_IGUAL = 51;
+    public static final int DIVISAO = 52;
+    public static final int DIFERENTE = 53;
+    public static final int INCREMENTO = 54;
+    public static final int DECREMENTO = 55;
 
 }
